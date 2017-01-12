@@ -35,18 +35,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateReleased, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateReleased, new { htmlAttributes = new { @class = "form-control" } })
+                @*Html.EditorFor(model => model.DateReleased, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(model => model.DateReleased, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DateReleased, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <script language="javascript" type="text/javascript">
-    $('#DateReleased').datepicker({
-        onSelect: function (dateText, inst) { document.getElementById('DateReleased').value = dateText; },
-        defaultDate: document.getElementById('DateReleased').value
-    });
-        </script>
-        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
