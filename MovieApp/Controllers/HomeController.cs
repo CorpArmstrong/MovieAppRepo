@@ -51,23 +51,37 @@ namespace MovieApp.Controllers
         // GET: Home/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var movieToEdit = (from m in _db.Movies
+
+                               where m.Id == id
+
+                               select m).First();
+
+            return View(movieToEdit);
         }
 
         // POST: Home/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Movie movieToEdit)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var originalMovie = (from m in _db.Movies
 
-                return RedirectToAction("Index");
-            }
-            catch
+                                 where m.Id == movieToEdit.Id
+
+                                 select m).First();
+
+            if (!ModelState.IsValid)
             {
-                return View();
+                return View(originalMovie);
             }
+
+            originalMovie.Title = movieToEdit.Title;
+            originalMovie.Director = movieToEdit.Director;
+            originalMovie.DateReleased = movieToEdit.DateReleased;
+
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Home/Delete/5
